@@ -2,14 +2,16 @@
 import React, { useState, useMemo } from "react";
 
 const isPrimeNumber = (n) => {
-  console.log("Expensive calculation execution for prime");
+  
   let num = n;
   if (num === 0 || num === 1) {
+    console.log("Expensive calculation execution for prime");
     return false;
   }
   n--;
   while (n > 1) {
     if (num % n === 0) {
+      console.log("Expensive calculation execution for prime");
       return false;
     }
     n--;

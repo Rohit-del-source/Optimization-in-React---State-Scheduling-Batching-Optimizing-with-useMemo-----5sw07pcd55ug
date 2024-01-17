@@ -2,16 +2,13 @@
 import React, { useState, useMemo } from "react";
 
 const isPrimeNumber = (n) => {
-  
   let num = n;
   if (num === 0 || num === 1) {
-    console.log("Expensive calculation execution for prime");
     return false;
   }
   n--;
   while (n > 1) {
     if (num % n === 0) {
-      console.log("Expensive calculation execution for prime");
       return false;
     }
     n--;
@@ -36,8 +33,17 @@ const Home = () => {
   const [num1, setNum1] = useState("");
   const [num2, setNum2] = useState("");
 
-  const memoizedIsPrimeNumber = useMemo(() => isPrimeNumber(num2), [num2]);
-  const memoizedIsArmstrongNumber = useMemo(() => isArmstrongNumber(num1), [num1]);
+  const memoizedIsPrimeNumber = useMemo(() => {
+    if (num2 !== "") {
+      console.log("Expensive calculation execution for prime");
+    }
+    return isPrimeNumber(num2);
+  }, [num2]);
+
+  const memoizedIsArmstrongNumber = useMemo(() => {
+    console.log("Expensive calculation execution for Armstrong");
+    return isArmstrongNumber(num1);
+  }, [num1]);
 
   const isArmstrong = memoizedIsArmstrongNumber;
   const isPrime = memoizedIsPrimeNumber;

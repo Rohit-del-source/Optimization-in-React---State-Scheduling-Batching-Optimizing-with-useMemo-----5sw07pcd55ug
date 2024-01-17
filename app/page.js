@@ -1,7 +1,8 @@
-"use client"
-import React, { useState, useMemo, useEffect } from "react";
+'use client'
+import React, { useState, useMemo } from "react";
 
 const isPrimeNumber = (n) => {
+  console.log("Expensive calculation execution for prime");
   let num = n;
   if (num === 0 || num === 1) {
     return false;
@@ -29,22 +30,17 @@ const isArmstrongNumber = (number) => {
   return sum === number;
 };
 
+
+
 const Home = () => {
   const [num1, setNum1] = useState("");
   const [num2, setNum2] = useState("");
+  
+  const memoizedIsPrimeNumber = useMemo(() => isPrimeNumber, []);
+  const memoizedIsArmstrongNumber = useMemo(() => isArmstrongNumber, []);
 
-  const memoizedIsPrimeNumber = useMemo(() => isPrimeNumber(num2), [num2]);
-  const memoizedIsArmstrongNumber = useMemo(() => isArmstrongNumber(num1), [num1]);
-
-  // Use useEffect to log only when the user enters a number for prime checking
-  useEffect(() => {
-    if (num2 !== "") {
-      console.log("Expensive calculation execution for prime");
-    }
-  }, [num2]);
-
-  const isArmstrong = memoizedIsArmstrongNumber;
-  const isPrime = memoizedIsPrimeNumber;
+  const isArmstrong = memoizedIsArmstrongNumber(num1);
+  const isPrime = memoizedIsPrimeNumber(num2);
 
   return (
     <div className="App">
